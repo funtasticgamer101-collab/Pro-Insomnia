@@ -1,39 +1,24 @@
-const CACHE_VERSION = 'v5.2';
-const CACHE_NAME = `insomnia-journal-${CACHE_VERSION}`;
-const BASE_PATH = '/Pro-Insomnia/';
-
-const urlsToCache = [
-  BASE_PATH,
-  BASE_PATH + 'index.html',
-  BASE_PATH + 'styles.css',
-  BASE_PATH + 'script.js',
-  BASE_PATH + 'manifest.json'
-];
+const CACHE_NAME = 'insomnia-pwa-v1';
 
 // Install event
-self.addEventListener('install', event => {
-  console.log('🔧 Service Worker installing...');
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('📦 Caching files');
-      return cache.addAll(urlsToCache).catch(err => {
-        console.log('Cache error (non-critical):', err);
-        return cache.addAll(urlsToCache.filter(url => url !== BASE_PATH));
-      });
-    })
-  );
-  self.skipWaiting();
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
 });
 
-// Activate event - clean up old caches
-self.addEventListener('activate', event => {
-  console.log('✅ Service Worker activating...');
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('🗑️ Deleting old cache:', cacheName);
+// Activate event
+self.addEventListener('activate', (event) => {
+    event.waitUntil(clients.claim());
+});
+
+// Fetch event - REQUIRED for PWA installability to hide the URL bar
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            // Fallback if offline
+            return new Response('You are offline.');
+        })
+    );
+});
             return caches.delete(cacheName);
           }
         })
