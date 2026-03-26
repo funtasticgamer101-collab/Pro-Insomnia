@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌙 My Insomnia Journal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a0b2e">
+    <title>🌙 Insomnia Journal</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🌙 My Insomnia Journal</h1>
-            <p class="subtitle">A safe space for sleepless nights</p>
+    <div class="app-container">
+        <header class="journal-header">
+            <div class="header-decoration"></div>
+            <h1>🌙 Insomnia Journal</h1>
+            <p class="subtitle">Your companion through sleepless nights</p>
+            <div class="header-decoration bottom"></div>
         </header>
 
         <nav class="tabs">
@@ -20,61 +26,103 @@
             </button>
             <button class="tab-btn" data-tab="dreams">
                 <span class="icon">💭</span>
-                <span>Dreams & Nightmares</span>
+                <span>Dreams</span>
             </button>
             <button class="tab-btn" data-tab="thoughts">
                 <span class="icon">💜</span>
-                <span>Thoughts & Feelings</span>
+                <span>Thoughts</span>
             </button>
         </nav>
 
         <!-- NIGHTLY SECTION -->
         <div class="tab-content active" id="nightly">
-            <div class="section-header">
-                <h2>🌃 Nightly Entries</h2>
-                <button class="add-btn" id="addNightBtn">
-                    <span>✨ New Night Entry</span>
-                </button>
-            </div>
-            
-            <div id="nightlyEntries" class="entries-container">
-                <div class="empty-state">
-                    <span class="empty-icon">🌙</span>
-                    <p>No entries yet. Click "New Night Entry" when you can't sleep.</p>
+            <div class="journal-page">
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <span class="title-icon">🌃</span>
+                        Nightly Entries
+                    </h2>
+                    <button class="add-btn" id="addNightBtn">
+                        <span class="btn-icon">✨</span>
+                        <span>New Entry</span>
+                    </button>
+                </div>
+                
+                <div id="nightlyEntries" class="entries-container">
+                    <div class="empty-state">
+                        <div class="empty-illustration">
+                            <span class="empty-icon">🌙</span>
+                            <div class="stars">
+                                <span>✨</span>
+                                <span>⭐</span>
+                                <span>✨</span>
+                            </div>
+                        </div>
+                        <p class="empty-text">No entries yet</p>
+                        <p class="empty-subtext">Click "New Entry" when you can't sleep</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- DREAMS & NIGHTMARES SECTION -->
         <div class="tab-content" id="dreams">
-            <div class="section-header">
-                <h2>💭 Dreams & Nightmares</h2>
-                <button class="add-btn" id="addDreamBtn">
-                    <span>✨ New Dream Entry</span>
-                </button>
-            </div>
-            
-            <div id="dreamEntries" class="entries-container">
-                <div class="empty-state">
-                    <span class="empty-icon">💭</span>
-                    <p>No dream entries yet. Record your dreams here.</p>
+            <div class="journal-page">
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <span class="title-icon">💭</span>
+                        Dreams & Nightmares
+                    </h2>
+                    <button class="add-btn" id="addDreamBtn">
+                        <span class="btn-icon">✨</span>
+                        <span>New Entry</span>
+                    </button>
+                </div>
+                
+                <div id="dreamEntries" class="entries-container">
+                    <div class="empty-state">
+                        <div class="empty-illustration">
+                            <span class="empty-icon">💭</span>
+                            <div class="stars">
+                                <span>✨</span>
+                                <span>⭐</span>
+                                <span>✨</span>
+                            </div>
+                        </div>
+                        <p class="empty-text">No dream entries yet</p>
+                        <p class="empty-subtext">Record your dreams and nightmares here</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- THOUGHTS & FEELINGS SECTION -->
         <div class="tab-content" id="thoughts">
-            <div class="section-header">
-                <h2>💜 Thoughts & Feelings</h2>
-                <button class="add-btn" id="addThoughtBtn">
-                    <span>✨ New Thought Entry</span>
-                </button>
-            </div>
-            
-            <div id="thoughtEntries" class="entries-container">
-                <div class="empty-state">
-                    <span class="empty-icon">💜</span>
-                    <p>No thought entries yet. Share what's on your mind.</p>
+            <div class="journal-page">
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <span class="title-icon">💜</span>
+                        Thoughts & Feelings
+                    </h2>
+                    <button class="add-btn" id="addThoughtBtn">
+                        <span class="btn-icon">✨</span>
+                        <span>New Entry</span>
+                    </button>
+                </div>
+                
+                <div id="thoughtEntries" class="entries-container">
+                    <div class="empty-state">
+                        <div class="empty-illustration">
+                            <span class="empty-icon">💜</span>
+                            <div class="stars">
+                                <span>✨</span>
+                                <span>⭐</span>
+                                <span>✨</span>
+                            </div>
+                        </div>
+                        <p class="empty-text">No thought entries yet</p>
+                        <p class="empty-subtext">Share what's on your mind</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,36 +130,57 @@
 
     <!-- MODAL -->
     <div class="modal" id="entryModal">
+        <div class="modal-backdrop"></div>
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">New Entry</h3>
-                <button class="close-btn" id="closeModal">&times;</button>
+                <button class="close-btn" id="closeModal">
+                    <span>&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>📅 Date</label>
+                    <label class="form-label">
+                        <span class="label-icon">📅</span>
+                        Date
+                    </label>
                     <input type="date" id="entryDate" class="form-input">
                 </div>
                 <div class="form-group">
-                    <label>🕐 Time</label>
+                    <label class="form-label">
+                        <span class="label-icon">🕐</span>
+                        Time
+                    </label>
                     <input type="time" id="entryTime" class="form-input">
                 </div>
                 <div class="form-group" id="nightlyDetailsGroup">
-                    <label>🌙 What's keeping you awake?</label>
-                    <textarea id="entryDetails" class="form-textarea" rows="6" placeholder="Describe your night..."></textarea>
+                    <label class="form-label">
+                        <span class="label-icon">🌙</span>
+                        What's keeping you awake?
+                    </label>
+                    <textarea id="entryDetails" class="form-textarea" rows="8" placeholder="Describe your night..."></textarea>
                 </div>
                 <div class="form-group" id="dreamDetailsGroup" style="display:none;">
-                    <label>💭 Describe your dream or nightmare</label>
-                    <textarea id="dreamDetails" class="form-textarea" rows="6" placeholder="What did you dream about?"></textarea>
+                    <label class="form-label">
+                        <span class="label-icon">💭</span>
+                        Describe your dream or nightmare
+                    </label>
+                    <textarea id="dreamDetails" class="form-textarea" rows="8" placeholder="What did you dream about?"></textarea>
                 </div>
                 <div class="form-group" id="thoughtDetailsGroup" style="display:none;">
-                    <label>💜 What's on your mind?</label>
-                    <textarea id="thoughtDetails" class="form-textarea" rows="6" placeholder="Express your thoughts and feelings..."></textarea>
+                    <label class="form-label">
+                        <span class="label-icon">💜</span>
+                        What's on your mind?
+                    </label>
+                    <textarea id="thoughtDetails" class="form-textarea" rows="8" placeholder="Express your thoughts and feelings..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                <button class="btn btn-primary" id="saveBtn">Save Entry</button>
+                <button class="btn btn-primary" id="saveBtn">
+                    <span>💾</span>
+                    Save Entry
+                </button>
             </div>
         </div>
     </div>
