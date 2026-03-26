@@ -7,7 +7,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1a0b2e">
     <title>🌙 Insomnia Journal</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- CACHE BUSTING -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="stylesheet" href="styles.css?v=3.0">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -185,6 +191,15 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SERVICE WORKER REGISTRATION -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js?v=3.0')
+                .then(reg => console.log('✅ Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed:', err));
+        }
+    </script>
+
+    <script src="script.js?v=3.0"></script>
 </body>
 </html>
