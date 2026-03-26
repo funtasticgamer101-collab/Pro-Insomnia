@@ -16,11 +16,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <link rel="manifest" href="./manifest.json">
+    <link rel="manifest" href="/Pro-Insomnia/manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231a0b2e' width='192' height='192'/><text y='150' x='96' font-size='140' text-anchor='middle'>🌙</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%231a0b2e' width='180' height='180'/><text y='135' x='90' font-size='130' text-anchor='middle'>🌙</text></svg>">
     
-    <link rel="stylesheet" href="./styles.css?v=5.1">
+    <link rel="stylesheet" href="/Pro-Insomnia/styles.css?v=5.2">
 </head>
 <body>
     <div class="app-container">
@@ -180,12 +180,12 @@
     <!-- SERVICE WORKER REGISTRATION -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js?v=5.1')
+            navigator.serviceWorker.register('/Pro-Insomnia/service-worker.js?v=5.2')
                 .then(reg => console.log('✅ Service Worker registered'))
                 .catch(err => console.log('Service Worker registration failed:', err));
         }
     </script>
 
-    <script src="./script.js?v=5.1"></script>
+    <script src="/Pro-Insomnia/script.js?v=5.2"></script>
 </body>
 </html>
