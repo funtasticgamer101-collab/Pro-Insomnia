@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
     loadData();
     setupEventListeners();
     renderEntries('nightly');
+    
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js?v=5.0')
+            .then(reg => console.log('✅ Service Worker registered'))
+            .catch(err => console.log('Service Worker registration failed:', err));
+    }
 });
 
 // ============================================
@@ -46,7 +53,7 @@ function setupEventListeners() {
 
     // Modal backdrop click
     document.getElementById('entryModal').addEventListener('click', function(e) {
-        if (e.target === this) {
+        if (e.target === this || e.target === document.querySelector('.modal-backdrop')) {
             closeModal();
         }
     });
@@ -306,12 +313,8 @@ function renderEntries(type) {
                     <span class="entry-time">🕐 ${entry.time}</span>
                 </div>
                 <div class="entry-actions">
-                    <button class="entry-btn edit-btn" onclick="editEntry('${type}', ${entry.id})" title="Edit">
-                        ✏️
-                    </button>
-                    <button class="entry-btn delete-btn" onclick="deleteEntry('${type}', ${entry.id})" title="Delete">
-                        🗑️
-                    </button>
+                    <button class="entry-btn edit-btn" onclick="editEntry('${type}', ${entry.id})" title="Edit">✏️</button>
+                    <button class="entry-btn delete-btn" onclick="deleteEntry('${type}', ${entry.id})" title="Delete">🗑️</button>
                 </div>
             </div>
             <div class="entry-content">
@@ -327,7 +330,5 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ============================================
-// UTILITY FUNCTIONS
-// ============================================
 console.log('✅ Script loaded successfully');
+        
