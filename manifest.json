@@ -2,8 +2,8 @@
   "name": "Insomnia Journal",
   "short_name": "Insomnia",
   "description": "Your companion through sleepless nights",
-  "start_url": "/Pro-Insomnia/",
-  "scope": "/Pro-Insomnia/",
+  "start_url": "https://funtasticgamer101-collab.github.io/Pro-Insomnia/",
+  "scope": "https://funtasticgamer101-collab.github.io/Pro-Insomnia/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#0a0612",
@@ -21,6 +21,5 @@
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
-  ],
-  "categories": ["productivity", "lifestyle", "health"]
+  ]
 }
