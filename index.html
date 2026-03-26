@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Insomnia Journal">
     <meta name="theme-color" content="#1a0b2e">
+    <meta name="description" content="Your companion through sleepless nights">
+    
     <title>🌙 Insomnia Journal</title>
     
     <!-- CACHE BUSTING -->
@@ -13,7 +16,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <link rel="stylesheet" href="styles.css?v=4.0">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><text y='150' font-size='180'>🌙</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><text y='135' font-size='160'>🌙</text></svg>">
+    
+    <link rel="stylesheet" href="styles.css?v=5.0">
 </head>
 <body>
     <div class="app-container">
@@ -139,57 +146,37 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">New Entry</h3>
-                <button class="close-btn" id="closeModal">
-                    <span>&times;</span>
-                </button>
+                <button class="close-btn" id="closeModal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">
-                        <span class="label-icon">📅</span>
-                        Date
-                    </label>
+                    <label class="form-label">📅 Date</label>
                     <input type="date" id="entryDate" class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">
-                        <span class="label-icon">🕐</span>
-                        Time
-                    </label>
+                    <label class="form-label">🕐 Time</label>
                     <input type="time" id="entryTime" class="form-input">
                 </div>
                 <div class="form-group" id="nightlyDetailsGroup">
-                    <label class="form-label">
-                        <span class="label-icon">🌙</span>
-                        What's keeping you awake?
-                    </label>
+                    <label class="form-label">🌙 What's keeping you awake?</label>
                     <textarea id="entryDetails" class="form-textarea" rows="8" placeholder="Describe your night..."></textarea>
                 </div>
                 <div class="form-group" id="dreamDetailsGroup" style="display:none;">
-                    <label class="form-label">
-                        <span class="label-icon">💭</span>
-                        Describe your dream or nightmare
-                    </label>
+                    <label class="form-label">💭 Describe your dream or nightmare</label>
                     <textarea id="dreamDetails" class="form-textarea" rows="8" placeholder="What did you dream about?"></textarea>
                 </div>
                 <div class="form-group" id="thoughtDetailsGroup" style="display:none;">
-                    <label class="form-label">
-                        <span class="label-icon">💜</span>
-                        What's on your mind?
-                    </label>
+                    <label class="form-label">💜 What's on your mind?</label>
                     <textarea id="thoughtDetails" class="form-textarea" rows="8" placeholder="Express your thoughts and feelings..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                <button class="btn btn-primary" id="saveBtn">
-                    <span>💾</span>
-                    Save Entry
-                </button>
+                <button class="btn btn-primary" id="saveBtn">💾 Save Entry</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js?v=4.0"></script>
+    <script src="script.js?v=5.0"></script>
 </body>
 </html>
