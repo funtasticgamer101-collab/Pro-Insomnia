@@ -1,12 +1,13 @@
-const CACHE_VERSION = 'v5.1';
+const CACHE_VERSION = 'v5.2';
 const CACHE_NAME = `insomnia-journal-${CACHE_VERSION}`;
+const BASE_PATH = '/Pro-Insomnia/';
 
 const urlsToCache = [
-  './',
-  './index.html',
-  './styles.css',
-  './script.js',
-  './manifest.json'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'styles.css',
+  BASE_PATH + 'script.js',
+  BASE_PATH + 'manifest.json'
 ];
 
 // Install event
@@ -17,7 +18,7 @@ self.addEventListener('install', event => {
       console.log('📦 Caching files');
       return cache.addAll(urlsToCache).catch(err => {
         console.log('Cache error (non-critical):', err);
-        return cache.addAll(urlsToCache.filter(url => url !== './'));
+        return cache.addAll(urlsToCache.filter(url => url !== BASE_PATH));
       });
     })
   );
@@ -49,6 +50,11 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Skip cross-origin requests
+  if (!event.request.url.includes('/Pro-Insomnia/')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
@@ -72,7 +78,7 @@ self.addEventListener('fetch', event => {
       }).catch(() => {
         // Return cached version or offline page
         return caches.match(event.request).then(response => {
-          return response || caches.match('./index.html');
+          return response || caches.match(BASE_PATH + 'index.html');
         });
       });
     })
