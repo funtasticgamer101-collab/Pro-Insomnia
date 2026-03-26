@@ -1,4 +1,6 @@
-// State management
+// ============================================
+// STATE MANAGEMENT
+// ============================================
 let currentTab = 'nightly';
 let currentEditId = null;
 let currentEditType = null;
@@ -9,25 +11,83 @@ const data = {
     thoughts: []
 };
 
-// Load data from localStorage
+// ============================================
+// INITIALIZATION
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🌙 Insomnia Journal Loaded');
+    
+    loadData();
+    setupEventListeners();
+    renderEntries('nightly');
+});
+
+// ============================================
+// EVENT LISTENERS
+// ============================================
+function setupEventListeners() {
+    // Tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            switchTab(tabName);
+        });
+    });
+
+    // Add entry buttons
+    document.getElementById('addNightBtn').addEventListener('click', () => openModal('nightly'));
+    document.getElementById('addDreamBtn').addEventListener('click', () => openModal('dreams'));
+    document.getElementById('addThoughtBtn').addEventListener('click', () => openModal('thoughts'));
+
+    // Modal controls
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelBtn').addEventListener('click', closeModal);
+    document.getElementById('saveBtn').addEventListener('click', saveEntry);
+
+    // Modal backdrop click
+    document.getElementById('entryModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+}
+
+// ============================================
+// DATA MANAGEMENT
+// ============================================
 function loadData() {
     const saved = localStorage.getItem('insomniaJournal');
     if (saved) {
-        const parsed = JSON.parse(saved);
-        data.nightly = parsed.nightly || [];
-        data.dreams = parsed.dreams || [];
-        data.thoughts = parsed.thoughts || [];
+        try {
+            const parsed = JSON.parse(saved);
+            data.nightly = parsed.nightly || [];
+            data.dreams = parsed.dreams || [];
+            data.thoughts = parsed.thoughts || [];
+            console.log('✅ Data loaded from localStorage');
+        } catch (e) {
+            console.error('Error loading data:', e);
+        }
     }
 }
 
-// Save data to localStorage
 function saveData() {
     localStorage.setItem('insomniaJournal', JSON.stringify(data));
+    console.log('💾 Data saved to localStorage');
 }
 
-// Switch tabs
+// ============================================
+// TAB SWITCHING
+// ============================================
 function switchTab(tabName) {
     currentTab = tabName;
+    console.log(`📑 Switched to ${tabName} tab`);
     
     // Update tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -40,10 +100,17 @@ function switchTab(tabName) {
         content.classList.remove('active');
     });
     document.getElementById(tabName).classList.add('active');
+    
+    // Render entries for this tab
+    renderEntries(tabName);
 }
 
-// Open modal
+// ============================================
+// MODAL FUNCTIONS
+// ============================================
 function openModal(type) {
+    console.log(`🔓 Opening modal for ${type}`);
+    
     currentEditType = type;
     currentEditId = null;
     
@@ -54,7 +121,7 @@ function openModal(type) {
     document.getElementById('entryDate').value = now.toISOString().split('T')[0];
     document.getElementById('entryTime').value = now.toTimeString().slice(0, 5);
     
-    // Clear textareas
+    // Clear all textareas
     document.getElementById('entryDetails').value = '';
     document.getElementById('dreamDetails').value = '';
     document.getElementById('thoughtDetails').value = '';
@@ -72,23 +139,26 @@ function openModal(type) {
     };
     document.getElementById('modalTitle').textContent = titles[type];
     
+    // Show modal
     modal.classList.add('active');
 }
 
-// Close modal
 function closeModal() {
+    console.log('🔒 Closing modal');
     document.getElementById('entryModal').classList.remove('active');
     currentEditId = null;
     currentEditType = null;
 }
 
-// Save entry
+// ============================================
+// ENTRY MANAGEMENT
+// ============================================
 function saveEntry() {
     const date = document.getElementById('entryDate').value;
     const time = document.getElementById('entryTime').value;
     
     if (!date || !time) {
-        alert('Please fill in date and time!');
+        alert('⚠️ Please fill in date and time!');
         return;
     }
     
@@ -102,7 +172,7 @@ function saveEntry() {
     }
     
     if (!details.trim()) {
-        alert('Please write something!');
+        alert('⚠️ Please write something!');
         return;
     }
     
@@ -119,10 +189,12 @@ function saveEntry() {
         const index = data[currentEditType].findIndex(e => e.id === currentEditId);
         if (index !== -1) {
             data[currentEditType][index] = entry;
+            console.log(`✏️ Updated entry ${currentEditId}`);
         }
     } else {
         // Add new entry
         data[currentEditType].push(entry);
+        console.log(`✨ Created new ${currentEditType} entry`);
     }
     
     // Sort by timestamp (newest first)
@@ -133,17 +205,18 @@ function saveEntry() {
     closeModal();
 }
 
-// Delete entry
 function deleteEntry(type, id) {
-    if (confirm('Are you sure you want to delete this entry?')) {
+    if (confirm('🗑️ Are you sure you want to delete this entry?')) {
         data[type] = data[type].filter(entry => entry.id !== id);
         saveData();
         renderEntries(type);
+        console.log(`🗑️ Deleted entry ${id}`);
     }
 }
 
-// Edit entry
 function editEntry(type, id) {
+    console.log(`✏️ Editing entry ${id}`);
+    
     const entry = data[type].find(e => e.id === id);
     if (!entry) return;
     
@@ -180,14 +253,15 @@ function editEntry(type, id) {
     modal.classList.add('active');
 }
 
-// Format date for display
+// ============================================
+// RENDERING
+// ============================================
 function formatDate(dateStr) {
     const date = new Date(dateStr);
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
 }
 
-// Render entries for a specific type
 function renderEntries(type) {
     const container = document.getElementById(
         type === 'nightly' ? 'nightlyEntries' :
@@ -197,7 +271,7 @@ function renderEntries(type) {
     
     if (data[type].length === 0) {
         const emptyMessages = {
-            nightly: 'No entries yet. Click "New Night Entry" when you can\'t sleep.',
+            nightly: 'No entries yet. Click "New Entry" when you can\'t sleep.',
             dreams: 'No dream entries yet. Record your dreams here.',
             thoughts: 'No thought entries yet. Share what\'s on your mind.'
         };
@@ -209,8 +283,16 @@ function renderEntries(type) {
         
         container.innerHTML = `
             <div class="empty-state">
-                <span class="empty-icon">${emptyIcons[type]}</span>
-                <p>${emptyMessages[type]}</p>
+                <div class="empty-illustration">
+                    <span class="empty-icon">${emptyIcons[type]}</span>
+                    <div class="stars">
+                        <span>✨</span>
+                        <span>⭐</span>
+                        <span>✨</span>
+                    </div>
+                </div>
+                <p class="empty-text">No entries yet</p>
+                <p class="empty-subtext">${emptyMessages[type]}</p>
             </div>
         `;
         return;
@@ -220,8 +302,32 @@ function renderEntries(type) {
         <div class="entry-card">
             <div class="entry-header">
                 <div class="entry-meta">
-                    <span>📅 ${formatDate(entry.date)}</span>
-                    <span>🕐 ${entry.time}</span>
+                    <span class="entry-date">📅 ${formatDate(entry.date)}</span>
+                    <span class="entry-time">🕐 ${entry.time}</span>
                 </div>
-                <div>
-                    <button class="delete-btn" onclick="editEntry('${type}',
+                <div class="entry-actions">
+                    <button class="entry-btn edit-btn" onclick="editEntry('${type}', ${entry.id})" title="Edit">
+                        ✏️
+                    </button>
+                    <button class="entry-btn delete-btn" onclick="deleteEntry('${type}', ${entry.id})" title="Delete">
+                        🗑️
+                    </button>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p class="entry-text">${escapeHtml(entry.details)}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+console.log('✅ Script loaded successfully');
